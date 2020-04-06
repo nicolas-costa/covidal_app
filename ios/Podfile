@@ -54,7 +54,11 @@ target 'covidal_app' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  pod 'react-native-orientation', :path => '../node_modules/react-native-orientation'
+  pod 'react-native-orientation-locker', :path => '../node_modules/react-native-orientation-locker'
+
+
+
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
 
   target 'covidal_appTests' do
     inherit! :complete

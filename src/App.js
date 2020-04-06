@@ -4,7 +4,6 @@ import {
   ScrollView,
   Image,
   View,
-  Text,
   StatusBar,
   Dimensions,
   ActivityIndicator,
@@ -12,10 +11,10 @@ import {
 } from 'react-native';
 import styles from './style';
 
-import {Header, Colors} from 'react-native/Libraries/NewAppScreen';
-
+import {API_URL, ADMOB_UNIT1, ADMOB_UNIT2} from 'react-native-dotenv';
 import {LineChart} from 'react-native-chart-kit';
-import Orientation from 'react-native-orientation';
+import {AdMobBanner} from 'react-native-admob'
+import Orientation from 'react-native-orientation-locker';
 
 class App extends Component {
   state = {
@@ -36,9 +35,7 @@ class App extends Component {
   };
 
   loadReportData = () => {
-    fetch('http://192.168.1.106:8000/', {
-      method: 'get',
-    })
+    fetch(API_URL)
       .then((response) => response.json())
       .then((json) => {
         json.datasets.forEach((dataItem, index, data) => {
@@ -77,25 +74,18 @@ class App extends Component {
       });
   };
 
-  _orientationChanged = (orientation) => {
-    this.setState({
-      screenWidth: Dimensions.get('window').width
-    });
-  };
-
   refreshReportInfo = () => {
     this.setState({
       isRefreshing: true,
     });
-
-    Orientation.addOrientationListener(this._orientationChanged);
-
     this.loadReportData();
   };
 
   componentDidMount(): void {
     this.loadReportData();
+    Orientation.lockToPortrait();
   }
+
 
   render() {
     return this.state.isLoading ? (
@@ -122,11 +112,13 @@ class App extends Component {
               style={styles.logo}
               source={require('./assets/bk.png')}
             />
-            {global.HermesInternal == null ? null : (
-              <View style={styles.engine}>
-                <Text style={styles.footer}>Engine: Hermes</Text>
-              </View>
-            )}
+            <AdMobBanner
+              bannerSize='fullBanner'
+              adUnitID={ADMOB_UNIT1}
+              testDeviceID='EMULATOR'
+              isRequired={() => true}
+              didFailToReceiveAdWithError={(error) => console.log(error)}
+            />
             <View style={styles.body}>
               <LineChart
                 data={this.state.reportData}
@@ -140,6 +132,14 @@ class App extends Component {
                 }}
               />
             </View>
+            <AdMobBanner
+                onSize
+              bannerSize='fullBanner'
+              adUnitID={ADMOB_UNIT2}
+              testDeviceID='EMULATOR'
+              isRequired={() => true}
+              didFailToReceiveAdWithError={(error) => console.log(error)}
+            />
           </ScrollView>
         </SafeAreaView>
       </View>
