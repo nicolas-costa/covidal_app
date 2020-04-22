@@ -1,4 +1,4 @@
-package com.covidal_app;
+package com.covid19al_app;
 
 import android.content.Intent;
 import android.content.res.Configuration;

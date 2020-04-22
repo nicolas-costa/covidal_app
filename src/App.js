@@ -11,9 +11,8 @@ import {
 } from 'react-native';
 import styles from './style';
 
-import {API_URL, ADMOB_UNIT1, ADMOB_UNIT2} from 'react-native-dotenv';
+import {API_URL} from 'react-native-dotenv';
 import {LineChart} from 'react-native-chart-kit';
-import {AdMobBanner} from 'react-native-admob'
 import Orientation from 'react-native-orientation-locker';
 
 class App extends Component {
@@ -112,13 +111,6 @@ class App extends Component {
               style={styles.logo}
               source={require('./assets/bk.png')}
             />
-            <AdMobBanner
-              bannerSize='fullBanner'
-              adUnitID={ADMOB_UNIT1}
-              testDeviceID='EMULATOR'
-              isRequired={() => true}
-              didFailToReceiveAdWithError={(error) => console.log(error)}
-            />
             <View style={styles.body}>
               <LineChart
                 data={this.state.reportData}
@@ -132,14 +124,6 @@ class App extends Component {
                 }}
               />
             </View>
-            <AdMobBanner
-                onSize
-              bannerSize='fullBanner'
-              adUnitID={ADMOB_UNIT2}
-              testDeviceID='EMULATOR'
-              isRequired={() => true}
-              didFailToReceiveAdWithError={(error) => console.log(error)}
-            />
           </ScrollView>
         </SafeAreaView>
       </View>
